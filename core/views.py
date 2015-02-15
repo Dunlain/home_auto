@@ -3,26 +3,49 @@ from pyramid.renderers import render
 from pyramid.response import Response
 
 
-class LoginView(object):
+class BaseView(object):
+    """
+    Delegates HTTP requests to View objects methods.
+        HTTP GET -> self.get
+        HTTP POST -> self.post
+        HTTP PUT -> self.put
+        HTTP DELETE -> self.delete
+    """
+    def __init__(self, request):
+        self.request = request
+
+    def __call__(self):
+        method = self.request.method.lower()
+        try:
+            response_func = getattr(self, method)
+            response = response_func()
+
+        except AttributeError:
+            response = HTTPMethodNotAllowed()
+
+        return response
+
+
+class HomeView(BaseView):
+    """
+    Directs to login page, dependent upon HTTP request type
+    """
+    route_name = 'home'
+    pattern = '/'
+
+    def get(self):
+        render_template = render('core:templates/home.html', {}, request=self.request)
+        return Response(render_template)
+
+
+class LoginView(BaseView):
     """
     Directs to login page, dependent upon HTTP request type
     """
     route_name = 'login'
     pattern = 'login/{id}'
 
-    def __init__(self, request):
-        self.request = request
-
-    def __call__(self):
-        if self.request.method == 'GET':
-            return self.get()
-        elif self.request.method == 'POST':
-            return self.post()
-        else:
-            return HTTPMethodNotAllowed()
-
     def get(self):
-        # TODO: Create actual get method for... get
         render_template = render('core:templates/login.html', {}, request=self.request)
         return Response(render_template)
 
