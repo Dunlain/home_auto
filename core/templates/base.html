@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <link rel="stylesheet" href="/static/css/pure/pure.css" />
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %} - Home Automation</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">
-        {% block footer %}
-        &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
-        {% endblock %}
-    </div>
-</body>
+    <head lang="en">
+        <link rel="stylesheet" href="/static/css/pure/pure.css"/>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %} - Home Automation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="header">
+            <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+                <a class="pure-menu-heading" href="">Home Automation</a>
+                <ul>
+                    <li class="pure-menu-selected"><a href="#">Home</a></li>
+                    <li><a href="#">Lists</a></li>
+                    <li><a href="#">Stuff</a></li>
+                    <li><a href="#">Sign In</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="footer">
+            {% block footer %}
+                &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
+            {% endblock %}
+        </div>
+    </body>
 </html>
