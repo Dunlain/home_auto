@@ -5,18 +5,18 @@ import core.routes
 
 
 # Default Server Hosts
-SERVER_HOST = ('0.0.0.0', 8080)
-DB_HOST = ('0.0.0.0', 5432)
+SERVER_HOST = ('localhost', 8080)
+DB_HOST = ('localhost', 5432)
 
 # Default Database backend and driver
-DB_BACKEND = ('', '')
+DB_BACKEND = 'postgresql'
 
 # Default database username and password
 DB_USER = ''
 DB_PASSWORD = ''
 
 # Default database name
-DB_NAME = ''
+DB_NAME = 'home_auto_dev'
 
 # Default Database Settings
 DB_SETTINGS = {

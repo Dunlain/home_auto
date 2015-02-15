@@ -38,10 +38,10 @@ def create_configuration():
 
     # Add Database Engine
     db_url = "{backend}://{user}:{password}@{host}/{database}".format(
-        backend="+".join(settings.DB_BACKEND),
+        backend=settings.DB_BACKEND,
         user=settings.DB_USER,
         password=settings.DB_PASSWORD,
-        host=":".join(settings.DB_HOST),
+        host=settings.DB_HOST if isinstance(settings.DB_HOST, str) else "{0:s}:{1:d}".format(*settings.DB_HOST),
         database=settings.DB_NAME
     )
     engine = create_engine(db_url, **settings.DB_SETTINGS)
