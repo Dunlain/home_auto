@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="header">
-            <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+            <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal">
                 <a class="pure-menu-heading" href="">Home Automation</a>
                 <ul>
                     <li class="pure-menu-selected"><a href="#">Home</a></li>
@@ -18,15 +18,26 @@
                 </ul>
             </div>
         </div>
-
-        <div id="content">
-            {% block content %}
-            {% endblock %}
-        </div>
-        <div class="footer">
-            {% block footer %}
-                &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
-            {% endblock %}
+        <div class="pure-g">
+            <div id="left-sidebar" class="pure-u-1-5">
+                {% block left_sidebar %}
+                {% endblock %}
+            </div>
+            <div class="pure-u-3-5">
+                <div class="content">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                <div class="footer">
+                    {% block footer %}
+                        &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
+                    {% endblock %}
+                </div>
+            </div>
+            <div id="right-sidebar" class="pure-u-1-5">
+                {% block right_sidebar %}
+                {% endblock %}
+            </div>
         </div>
     </body>
 </html>
