@@ -1,14 +1,10 @@
 import pyramid_jinja2
 
 from pyramid.config import Configurator
-from pyramid.response import Response
 from wsgiref.simple_server import make_server
 
 from core.routes import create_routes as create_core_routes
 
-
-def hello_world(request):
-    return Response('Hello {name:s}!'.format(name=request.matchdict['name']))
 
 if __name__ == '__main__':
     config = Configurator()
