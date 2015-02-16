@@ -34,7 +34,7 @@ def create_configuration():
     Create the app configuration based upon the settings.py file
     :return: The app Configurator object.
     """
-    config = Configurator()
+    config = Configurator(settings=settings.APP_SETTINGS)
 
     # Add Database Engine
     db_url = "{backend}://{user}:{password}@{host}/{database}".format(
