@@ -35,6 +35,20 @@ def create_configuration():
     :return: The app Configurator object.
     """
     config = Configurator(settings=settings.APP_SETTINGS)
+    for renderer_name, factory in settings.APP_RENDERERS:
+        config.add_renderer(renderer_name, factory)
+
+    # Register views for requests to server
+    for package_views in settings.REGISTERED_PACKAGES:
+        for view, patterns in package_views.items():
+            for route_name, route_pattern in patterns.items():
+                print("Adding routes \"{}\" for \"{}\"".format(route_name, route_pattern))
+                config.add_route(route_name, route_pattern)
+                config.add_view(view, route_name=route_name)
+
+    # Register static files to server
+    for static_view_name, path in settings.STATIC_FILES:
+        config.add_static_view(static_view_name, path, cache_max_age=settings.MAX_CACHE_AGE)
 
     # Add Database Engine
     db_url = "{backend}://{user}:{password}@{host}/{database}".format(
@@ -48,24 +62,13 @@ def create_configuration():
     config.registry.dbmaker = sessionmaker(bind=engine)
     config.add_request_method(db_factory, reify=True)
 
-    # Add Static Files
-    config.add_static_view('static', 'static/', cache_max_age=settings.MAX_CACHE_AGE)
-
-    # Add Template Renderer
-    config.include(settings.TEMPLATE_RENDERER)
-    config.add_renderer('.html', factory=settings.TEMPLATE_RENDERER.renderer_factory)
-
-    # Register views for requests to server
-    for router_module in settings.VIEW_ROUTERS:
-        router_module.create_routes(config)
-
     return config
 
 
 if __name__ == '__main__':
-    config = create_configuration()
+    configuration = create_configuration()
     # Create WSGI App
-    app = config.make_wsgi_app()
+    app = configuration.make_wsgi_app()
     # Launch server
     server = make_server(settings.SERVER_HOST[0], settings.SERVER_HOST[1], app)
     server.serve_forever()
