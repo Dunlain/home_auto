@@ -1,6 +1,9 @@
-from pyramid.httpexceptions import HTTPMethodNotAllowed
+# Stack Packages
+from pyramid.httpexceptions import HTTPMethodNotAllowed, HTTPFound
 from pyramid.renderers import render
 from pyramid.response import Response
+# Home Automation Packages
+from .models import User
 
 
 class BaseView(object):
@@ -33,6 +36,25 @@ class HomeView(BaseView):
     def get(self):
         render_template = render('core:templates/home.html', {}, request=self.request)
         return Response(render_template)
+
+    def post(self):
+        post = self.request.POST
+        try:
+            user_name = post['name']
+            user_email = post['email']
+            user_pwd = post['password']
+
+        except KeyError:
+            response = HTTPFound(self.request.route_url('home'))
+
+        else:
+            session = self.request.db
+            new_user = User(name=user_name, email=user_email, password=user_pwd)
+            session.add(new_user)
+
+            response = HTTPFound(self.request.route_url('home'))
+
+        return Response(response)
 
 
 class LoginView(BaseView):

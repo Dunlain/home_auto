@@ -49,8 +49,8 @@ class Note(Base):
     id = Column(Integer, primary_key=True)
     title = Column(Unicode(255), unique=True, nullable=False)
     text = Column(Unicode(512), nullable=False)
-    parent = Column(Integer, ForeignKey(id), nullable=True, onupdate="CASCADE", ondelete='CASCADE')
-    owner = Column(Integer, ForeignKey(User.id), nullable=False, onupdate="CASCADE", ondelete='CASCADE')
+    parent = Column(Integer, ForeignKey(id, onupdate="CASCADE", ondelete='CASCADE'), nullable=True)
+    owner = Column(Integer, ForeignKey(User.id, onupdate="CASCADE", ondelete='CASCADE'), nullable=False)
     added = Column(DateTime, default=datetime.datetime.utcnow)
     expires = Column(DateTime, nullable=True)
 
@@ -82,4 +82,4 @@ class List(Base):
     name = Column(Unicode(255), unique=True, nullable=False)
     category = Column(Unicode(255), nullable=True)
     priority = Column(PRIORITY_CHOICES, nullable=True)
-    owner = Column(Integer, ForeignKey(User.id), nullable=False, onupdate="CASCADE", ondelete='CASCADE')
+    owner = Column(Integer, ForeignKey(User.id, onupdate="CASCADE", ondelete='CASCADE'), nullable=False)
