@@ -30,9 +30,6 @@ class HomeView(BaseView):
     """
     Directs to login page, dependent upon HTTP request type
     """
-    route_name = 'home'
-    pattern = '/'
-
     def get(self):
         render_template = render('core:templates/home.html', {}, request=self.request)
         return Response(render_template)
@@ -42,9 +39,6 @@ class LoginView(BaseView):
     """
     Directs to login page, dependent upon HTTP request type
     """
-    route_name = 'login'
-    pattern = 'login/{id}'
-
     def get(self):
         render_template = render('core:templates/login.html', {}, request=self.request)
         return Response(render_template)
