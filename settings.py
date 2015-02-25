@@ -1,7 +1,7 @@
 # Stack Packages
 import pyramid_jinja2
 # Home Automation Packages
-import core.routes
+from core.routes import registered_views as core_views
 
 
 # In Debug Mode Flag
@@ -21,10 +21,16 @@ DB_PASSWORD = ''
 # Default database name
 DB_NAME = 'home_auto_dev'
 
+# Rate at which templates are refreshed (seconds)
+MAX_CACHE_AGE = 3600
+
 # Default Pyramid App Settings
 APP_SETTINGS = {
     'pyramid.reload_templates': DEV,  # If in Debug Mode reload templates from disk
-    'jinja2.directories': 'core:templates',
+    'pyramid.includes': [
+        'pyramid_jinja2',             # Add Template Renderer
+    ],
+    # Adding Jinja2 Filters
     'jinja2.filters': {
         'model_url': 'pyramid_jinja2.filters:model_url_filter',
         'route_url': 'pyramid_jinja2.filters:route_url_filter',
@@ -32,18 +38,24 @@ APP_SETTINGS = {
     }
 }
 
+APP_RENDERERS = (
+    ('.jinja2', pyramid_jinja2.renderer_factory),
+    ('.html', pyramid_jinja2.renderer_factory),
+)
+
 # Default Database Settings
 DB_SETTINGS = {
 
 }
 
-# Server Default Template Renderer
-TEMPLATE_RENDERER = pyramid_jinja2
-
-# Rate at which templates are refreshed (seconds)
-MAX_CACHE_AGE = 3600
-
 # View modules
-VIEW_ROUTERS = (
-    core.routes,  # Core views
+#  - To include a new package's routes the routes module must be added here
+REGISTERED_PACKAGES = (
+    core_views,  # Core views
+)
+
+# Static file directories
+# - To include new static files, such as css, js or images list the name and file path
+STATIC_FILES = (
+    ('static', 'static/'),
 )
