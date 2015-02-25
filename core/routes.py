@@ -1,11 +1,31 @@
-from pyramid.config import Configurator
+"""
+This module is used to help the Configurator generate view routes.
+To "activate" a view/route simply add the View to the "route" tuple.
+Each view MUST have a pattern and route_name attribute.
+    EG:
+    registered_views: {
+        MyView: {
+            'name1': 'pattern1',
+            ...
+        },
+        YourView: {
+            ...
+        }
+        ...
+    }
+"""
 from .views import LoginView, HomeView
 
 
-def create_routes(config: Configurator):
-    # Login Page
-    config.add_route(LoginView.route_name, LoginView.pattern)
-    config.add_view(LoginView, route_name=LoginView.route_name)
+registered_views = {
     # Home Page
-    config.add_route(HomeView.route_name, HomeView.pattern)
-    config.add_view(HomeView, route_name=HomeView.route_name)
+    HomeView: {
+        'home': '',
+        'home1': '/'
+    },
+    # Login Page
+    LoginView: {
+        'login': 'login',
+        'user_login': 'login/{username}'
+    },
+}
