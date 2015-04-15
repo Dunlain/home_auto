@@ -68,3 +68,29 @@ class LoginView(BaseView):
     def post(self):
         # TODO: Create everything needed in a real post
         return Response("I've been posted!")
+
+
+class ListView(BaseView):
+    """
+    Directs to lists page, dependent upon HTTP request type
+    """
+    def get(self):
+        render_template = render('core:templates/lists.html', {}, request=self.request)
+        return Response(render_template)
+
+    def post(self):
+        # TODO: Create everything needed in a real post
+        return Response("I've been posted!")
+
+
+class StuffView(BaseView):
+    """
+    Directs to Stuff page, dependent up HTTP request type
+    """
+    def get(self):
+        render_template = render('core:templates/stuff.html', {}, request=self.request)
+        return Response(render_template)
+
+    def post(self):
+        # TODO: Create everything needed in a real post
+        return Response("I've been posted!")
