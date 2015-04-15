@@ -14,7 +14,7 @@ Each view MUST have a pattern and route_name attribute.
         ...
     }
 """
-from .views import LoginView, HomeView
+from .views import LoginView, HomeView, ListView, StuffView
 
 
 registered_views = {
@@ -28,4 +28,12 @@ registered_views = {
         'login': 'login',
         'user_login': 'login/{username}'
     },
+    # List Page
+    ListView: {
+        'lists': 'lists',
+    },
+    # Stuff Page
+    StuffView: {
+        'stuff': 'stuff',
+    }
 }
