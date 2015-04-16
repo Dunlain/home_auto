@@ -4,7 +4,12 @@ import datetime
 from sqlalchemy import Column, Integer, Unicode, DateTime, Enum, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 # Module Constants
+from sqlalchemy.orm.scoping import scoped_session
+from sqlalchemy.orm.session import sessionmaker
+from zope.sqlalchemy.datamanager import ZopeTransactionExtension
+
 Base = declarative_base()
+DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 
 PRIORITY_CHOICES = Enum(
     "low",
@@ -80,6 +85,22 @@ class List(Base):
     __tablename__ = 'lists'
     id = Column(Integer, primary_key=True)
     name = Column(Unicode(255), unique=True, nullable=False)
-    category = Column(Unicode(255), nullable=True)
+    category = Column(Integer, ForeignKey(ListCategory.id, onupdate="CASCADE", ondelete="SET NULL"), nullable=True)
+    priority = Column(PRIORITY_CHOICES, nullable=True)
+    owner = Column(Integer, ForeignKey(User.id, onupdate="CASCADE", ondelete='CASCADE'), nullable=False)
+
+
+class Item(Base):
+    """
+    List Item model.
+    Fields:
+        text: the item's text
+        priority: the item's priority (Foreign Key)
+        added: the date and time that the item was added
+        owner: the item owner (Foreign Key)
+    """
+    __tablename__ = 'items'
+    id = Column(Integer, primary_key=True)
+    name = Column(Unicode(255), unique=True, nullable=False)
     priority = Column(PRIORITY_CHOICES, nullable=True)
     owner = Column(Integer, ForeignKey(User.id, onupdate="CASCADE", ondelete='CASCADE'), nullable=False)

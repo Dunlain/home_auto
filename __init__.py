@@ -4,6 +4,7 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import sessionmaker
 from wsgiref.simple_server import make_server
 # Home Automation Packages
+from core.models import Base
 import settings
 
 
@@ -15,8 +16,7 @@ def db_factory(request):
     :param request: an HTTP request object
     :return: a database session
     """
-    maker = request.registry.dbmaker
-    session = maker()
+    session = request.registry.dbmaker()
 
     def cleanup(request):
         if request.exception is not None:
@@ -59,6 +59,8 @@ def create_configuration():
         database=settings.DB_NAME
     )
     engine = create_engine(db_url, **settings.DB_SETTINGS)
+    # Create all tables defined in core.models in the database
+    Base.metadata.create_all(engine)
     config.registry.dbmaker = sessionmaker(bind=engine)
     config.add_request_method(db_factory, reify=True)
 

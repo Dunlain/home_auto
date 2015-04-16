@@ -2,8 +2,34 @@
 {% block title %}Login{% endblock %}
 {% block content %}
     <div>
-        <ul>
-            <li>THAR BE LISTS!</li>
-        </ul>
+        {% for category in categories %}
+            <h3>{{ category.name }}</h3>
+            {% for list in category.lists %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Priority</th>
+                            <th>Owner</th>
+                        </tr>r
+                    </thead>
+                    <tbody>
+                        {% for item in list %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.priority }}</td>
+                                <td>{{ item.owner }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td>No items in list...</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% empty %}
+                <h4>No Categories defined...</h4>
+            {% endfor %}
+        {% endfor %}
     </div>
 {% endblock %}
