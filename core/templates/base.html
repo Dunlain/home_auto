@@ -2,19 +2,28 @@
 <html>
     <head lang="en">
         <link rel="stylesheet" href="/static/css/pure/pure.css"/>
+        <link rel="stylesheet" href="/static/css/main.css">
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %} - Home Automation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <div class="header">
-            <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal">
-                <a class="pure-menu-heading" href="">Home Automation</a>
-                <ul>
-                    <li class="pure-menu-selected"><a href="{{ 'home'|route_url }}">Home</a></li>
-                    <li><a href="{{ 'lists'|route_url }}">Lists</a></li>
-                    <li><a href="{{ 'stuff'|route_url }}">Stuff</a></li>
-                    <li><a href="{{ 'login'|route_url }}">Sign In</a></li>
+        <div class="">
+            <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+                <a class="pure-menu-heading" href="#">Home Automation</a>
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item pure-menu-selected">
+                        <a class="pure-menu-link" href="{{ 'home'|route_url }}">Home</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a class="pure-menu-link" href="{{ 'lists'|route_url }}">Lists</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a class="pure-menu-link" href="{{ 'stuff'|route_url }}">Stuff</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a class="pure-menu-link" href="{{ 'login'|route_url }}">Sign In</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -28,16 +37,16 @@
                     {% block content %}
                     {% endblock %}
                 </div>
-                <div class="footer">
-                    {% block footer %}
-                        &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
-                    {% endblock %}
-                </div>
             </div>
             <div id="right-sidebar" class="pure-u-1-5">
                 {% block right_sidebar %}
                 {% endblock %}
             </div>
+        </div>
+        <div class="footer">
+            {% block footer %}
+                &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
+            {% endblock %}
         </div>
     </body>
 </html>
