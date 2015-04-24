@@ -3,6 +3,7 @@ from pyramid.httpexceptions import HTTPMethodNotAllowed, HTTPFound
 from pyramid.renderers import render
 from pyramid.response import Response
 # Home Automation Packages
+from core.models import List, ListCategory
 from .models import User
 
 
@@ -75,7 +76,11 @@ class ListView(BaseView):
     Directs to lists page, dependent upon HTTP request type
     """
     def get(self):
-        render_template = render('core:templates/lists.html', {}, request=self.request)
+        categories = ListCategory.query.all()
+        template_dict = {
+            'categories': categories,
+        }
+        render_template = render('core:templates/lists.html', template_dict, request=self.request)
         return Response(render_template)
 
     def post(self):

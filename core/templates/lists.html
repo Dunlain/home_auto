@@ -5,13 +5,13 @@
         {% for category in categories %}
             <h3>{{ category.name }}</h3>
             {% for list in category.lists %}
-                <table>
+                <table class="pure-table">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Priority</th>
                             <th>Owner</th>
-                        </tr>r
+                        </tr>
                     </thead>
                     <tbody>
                         {% for item in list %}
@@ -20,14 +20,14 @@
                                 <td>{{ item.priority }}</td>
                                 <td>{{ item.owner }}</td>
                             </tr>
-                        {% empty %}
+                        {% else %}
                             <tr>
                                 <td>No items in list...</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-            {% empty %}
+            {% else %}
                 <h4>No Categories defined...</h4>
             {% endfor %}
         {% endfor %}
