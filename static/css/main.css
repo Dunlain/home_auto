@@ -55,18 +55,14 @@ label {
  */
 
 .home-menu {
-    padding: 0.5em;
-    text-align: center;
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-}
-.home-menu {
     background: #2d3e50;
-    top: 0;
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
     color: white;
     height: 50px;
     left: 0;
     padding: 0.5em;
     position: absolute;
+    top: 0;
     width: 100%;
 }
 .pure-menu.pure-menu-fixed {
@@ -79,7 +75,9 @@ label {
 .home-menu .pure-menu-heading {
     color: white;
     font-weight: 400;
-    font-size: 120%;
+    font-size: 140%;
+    float: left;
+    margin-left: 2em;
 }
 
 .home-menu .pure-menu-selected a {
@@ -88,6 +86,10 @@ label {
 
 .home-menu a {
     color: #6FBEF3;
+}
+.home-menu ul {
+    float: right;
+    margin-right: 2em;
 }
 .home-menu li a:hover,
 .home-menu li a:focus {
