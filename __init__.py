@@ -61,6 +61,9 @@ def create_configuration():
     engine = create_engine(db_url, **settings.DB_SETTINGS)
     # Create all tables defined in core.models in the database
     Base.metadata.create_all(engine)
+    # Add session factory
+    config.set_session_factory(settings.SESSION_FACTORY)
+    # Add DB session factory
     config.registry.dbmaker = sessionmaker(bind=engine)
     config.add_request_method(db_factory, reify=True)
 
