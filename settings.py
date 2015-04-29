@@ -1,5 +1,6 @@
 # Stack Packages
 import pyramid_jinja2
+from pyramid.session import SignedCookieSessionFactory
 # Home Automation Packages
 from core.routes import registered_views as core_views
 
@@ -37,6 +38,9 @@ APP_SETTINGS = {
         'static_url': 'pyramid_jinja2.filters:static_url_filter',
     }
 }
+
+SESSION_SECRET = ''
+SESSION_FACTORY = SignedCookieSessionFactory(SESSION_SECRET)
 
 APP_RENDERERS = (
     ('.jinja2', pyramid_jinja2.renderer_factory),
