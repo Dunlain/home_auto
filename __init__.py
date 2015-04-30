@@ -1,5 +1,6 @@
 # Stack Packages
 from pyramid.config import Configurator
+from pyramid.request import Request
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import sessionmaker
 from wsgiref.simple_server import make_server
@@ -8,7 +9,7 @@ from core.models import Base
 import settings
 
 
-def db_factory(request):
+def db_factory(request: Request):
     """
     Create a database session upon a successful request to the home automation server.
     This allows an SQLAlchemy session to be available in view code as ``request.db`` or ``config.registry.dbmaker()``.
@@ -18,12 +19,13 @@ def db_factory(request):
     """
     session = request.registry.dbmaker()
 
-    def cleanup(request):
-        if request.exception is not None:
+    def cleanup(req: Request):
+        if req.exception is not None:
             session.rollback()
         else:
             session.commit()
         session.close()
+
     request.add_finished_callback(cleanup)
 
     return session
