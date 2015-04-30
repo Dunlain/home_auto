@@ -2,8 +2,9 @@
 from pyramid.httpexceptions import HTTPMethodNotAllowed, HTTPFound
 from pyramid.renderers import render
 from pyramid.response import Response
+from pyramid.request import Request
 # Home Automation Packages
-from core.models import List, ListCategory
+from core.models import Base, List, ListCategory
 from .models import User
 
 
@@ -15,8 +16,10 @@ class BaseView(object):
         HTTP PUT -> self.put
         HTTP DELETE -> self.delete
     """
-    def __init__(self, request):
+    def __init__(self, request: Request):
         self.request = request
+        self.session = request.session
+        self.db_session = request.db
 
     def __call__(self):
         method = self.request.method.lower()
@@ -28,6 +31,9 @@ class BaseView(object):
             response = HTTPMethodNotAllowed()
 
         return response
+
+    def get_or_create(self, model: Base, **kwargs):
+        self.db_session.query(model).filter(**kwargs)
 
 
 class HomeView(BaseView):
@@ -49,10 +55,8 @@ class HomeView(BaseView):
             response = HTTPFound(self.request.route_url('home'))
 
         else:
-            session = self.request.db
             new_user = User(name=user_name, email=user_email, password=user_pwd)
-            session.add(new_user)
-
+            self.db_session.add(new_user)
             response = HTTPFound(self.request.route_url('home'))
 
         return Response(response)
@@ -63,6 +67,16 @@ class LoginView(BaseView):
     Directs to login page, dependent upon HTTP request type
     """
     def get(self):
+        post = self.request.POST
+        try:
+            username = post['username']
+            password = post['password']
+
+            user = self.db_session.query(User).filter_by(name=username, password=password)
+
+        except KeyError:
+            response = HTTPFound(self.request.route_url('login'))
+
         render_template = render('core:templates/login.html', {}, request=self.request)
         return Response(render_template)
 
