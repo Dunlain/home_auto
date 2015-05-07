@@ -2,12 +2,12 @@
 {% block title %}Login{% endblock %}
 {% block content %}
     <div>
-        <form class="pure-form">
+        <form action="{{ 'login'|route_url }}" method="post" class="pure-form">
             <fieldset>
                 <legend>Please login</legend>
-
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input name="csrf_token" type="hidden" value="{{ csrf_token }}">
+                <input name="username" type="email" placeholder="Email" required>
+                <input name="password" type="password" placeholder="Password" required>
 
                 <label for="remember">
                     <input id="remember" type="checkbox"> Remember Me
