@@ -27,26 +27,26 @@
                 </ul>
             </div>
         </div>
-        <div class="pure-g">
-            <div id="left-sidebar" class="pure-u-1-5">
-                {% block left_sidebar %}
-                {% endblock %}
-            </div>
-            <div class="pure-u-3-5">
-                <div class="content">
+        <div class="content">
+            <div class="pure-g">
+                <div id="left-sidebar" class="pure-u-1-5">
+                    {% block left_sidebar %}
+                    {% endblock %}
+                </div>
+                <div class="pure-u-3-5">
                     {% block content %}
                     {% endblock %}
                 </div>
+                <div id="right-sidebar" class="pure-u-1-5">
+                    {% block right_sidebar %}
+                    {% endblock %}
+                </div>
             </div>
-            <div id="right-sidebar" class="pure-u-1-5">
-                {% block right_sidebar %}
+            <div class="footer">
+                {% block footer %}
+                    &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
                 {% endblock %}
             </div>
-        </div>
-        <div class="footer">
-            {% block footer %}
-                &copy Copyright 2015 by <a href="http://domain.invalid/">Butts Weekend</a>.
-            {% endblock %}
         </div>
     </body>
 </html>
